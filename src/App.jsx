@@ -163,7 +163,7 @@ function Hero() {
     <section className="hero" id="top">
       <div className="hero__media" aria-hidden="true">
         <div className="hero__fallback" />
-        <img className="hero__image" src="/hero-bg.png" alt="" />
+        <img className="hero__image" src={`${import.meta.env.BASE_URL}hero-bg.png`} alt="" />
         <div className="hero__veil" />
       </div>
 
@@ -214,7 +214,7 @@ function SectionHeading({ index, kicker, title, lead, align = "left" }) {
 function Avatar() {
   return (
     <div className="avatar" aria-label={`${profile.name}的个人画像`}>
-      <img src="/portrait.png" alt={`${profile.name}的个人画像`} />
+      <img src={`${import.meta.env.BASE_URL}portrait.png`} alt={`${profile.name}的个人画像`} />
       <span className="avatar__label">{profile.nameLatin}</span>
     </div>
   );
