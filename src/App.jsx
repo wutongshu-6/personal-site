@@ -36,6 +36,12 @@ const icons = {
       <path d="M3 12h4l2-6 4 12 2-6h6" />
     </>
   ),
+  book: (
+    <>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z" />
+      <path d="M4 5.5V21M8 7h8M8 11h8" />
+    </>
+  ),
   arrow: (
     <>
       <path d="M5 12h14M13 6l6 6-6 6" />
@@ -129,7 +135,7 @@ function Nav() {
     <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
       <div className="nav__inner">
         <Logo />
-        <nav className={`nav__links ${menuOpen ? "is-open" : ""}`}>
+        <nav className={`nav__links ${menuOpen ? "is-open" : ""}`} aria-label="主导航" id="site-navigation">
           {navLinks.map((link) => (
             <a
               key={link.id}
@@ -146,8 +152,9 @@ function Nav() {
         <button
           className="nav__toggle"
           type="button"
-          aria-label="打开菜单"
+          aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
           aria-expanded={menuOpen}
+          aria-controls="site-navigation"
           onClick={() => setMenuOpen((value) => !value)}
         >
           <span />
@@ -166,20 +173,34 @@ function Hero() {
         <img className="hero__image" src={`${import.meta.env.BASE_URL}hero-bg.png`} alt="" />
         <div className="hero__veil" />
       </div>
+      <div className="hero__leaves" aria-hidden="true">
+        {["one", "two", "three", "four", "five"].map((leaf) => (
+          <svg className={`hero__leaf hero__leaf--${leaf}`} viewBox="0 0 80 140" key={leaf}>
+            <path
+              className="hero__leaf-shape"
+              d="M40 132C17 105 7 73 13 46 18 25 31 12 40 7c9 5 22 18 27 39 6 27-4 59-27 86Z"
+            />
+            <path className="hero__leaf-vein" d="M40 128C39 88 40 48 40 11M39 92 22 73M40 73l18-21M40 106l17-19M40 55 26 40" />
+          </svg>
+        ))}
+      </div>
 
       <div className="hero__content container">
-        <Reveal className="hero__theme" delay={100}>
-          <span className="hero__theme-word">欢迎来到</span>
-          <strong className="hero__theme-name">徐天桐</strong>
-          <span className="hero__theme-word">的个人网站</span>
+        <Reveal className="hero__eyebrow" delay={80}>
+          <span className="dot" />
+          <span>徐天桐 <span className="hero__eyebrow-divider">/</span> TIANTONG XU</span>
         </Reveal>
-        <Reveal className="hero__subtitle" delay={240}>
-          <p>自然生长，严谨造物。</p>
+        <Reveal className="hero__theme" delay={170} as="h1">
+          <span className="hero__theme-word">自然生长，</span>
+          <strong className="hero__theme-name">严谨造物。</strong>
         </Reveal>
-        <Reveal className="hero__lede" delay={340}>
+        <Reveal className="hero__subtitle" delay={280}>
+          <p>计算机视觉 <span>·</span> 智能系统 <span>·</span> 把想法做成可用的东西</p>
+        </Reveal>
+        <Reveal className="hero__lede" delay={370}>
           <p className="hero__motto">{profile.motto}</p>
         </Reveal>
-        <Reveal className="hero__actions" delay={440}>
+        <Reveal className="hero__actions" delay={460}>
           <a className="button button--primary" href="#work">
             查看作品
             <Icon name="arrow" size={18} />
@@ -189,6 +210,8 @@ function Hero() {
           </a>
         </Reveal>
       </div>
+
+      <div className="hero__side-note" aria-hidden="true">RESEARCH / ENGINEERING / EXPLORATION</div>
 
       <div className="hero__scroll" aria-hidden="true">
         <span>SCROLL</span>
@@ -279,6 +302,7 @@ function ProjectCard({ project }) {
         <div className="project-card__art">
           <Motif type={project.motif} />
           <span className="project-card__index">{project.index}</span>
+          <span className="project-card__visual-label">{project.visualLabel}</span>
         </div>
       </div>
       <div className="project-card__content">
